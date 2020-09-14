@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+  <icon>utilidades-de-terminal</icon>
+  <name>Abrir terminal</name>
+  <command>exo-open --working-directory %f --launch TerminalEmulator</command>
+  <description></description>
+  <patterns>*</patterns>
+  <directories/>
+</action>
+<action>
+  <icon>administrador-de-archivos-del-sistema</icon>
+  <name>Abrir como root</name>
+  <command>pkexec thunar %f</command>
+  <description>Abrir directorio como root</description>
+  <patterns>*</patterns>
+  <directories/>
+</action>
+<action>
+  <icon>catfish</icon>
+  <name>Buscar archivo</name>
+  <command>catfish --hidden %f</command>
+  <description>Buscar archivo con Catfish</description>
+  <patterns>*</patterns>
+  <directories/>
+</action>
+<action>
+  <icon>aplicaciones-de-system</icon>
+  <name>Check sha256 sum</name>
+  <command>yad --image=dialog-info --button=OK --title=&quot;Check sha256 for %n&quot; --text=&quot;$(sha256sum %f)&quot; --borders=20 --center</command>
+  <description></description>
+  <patterns>*.iso;*.img;*.sub</patterns>
+  <other-files/>
+</action>
+</actions>
