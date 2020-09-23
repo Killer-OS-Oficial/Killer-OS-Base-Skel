@@ -26,6 +26,7 @@ ZSH_CACHE_DIR=$HOME/.cache/oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=white"
 
 # fzf & fd

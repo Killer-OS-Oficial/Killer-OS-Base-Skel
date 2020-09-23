@@ -7,7 +7,7 @@ alias merge="xrdb -merge $HOME/.Xresources"
 alias xcolor="xrdb -query | grep"
 alias vga="lspci -k | grep -A 2 -E '(VGA|3D)'"
 alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
-alias ip="curl --max-time 10 -w '\n' http://ident.me"
+alias my-ip="curl --max-time 10 -w '\n' http://ident.me"
 alias speed="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
 alias update-dir="LC_ALL=C xdg-user-dirs-update --force"
 
