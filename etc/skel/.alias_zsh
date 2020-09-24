@@ -269,7 +269,44 @@ alias vea="source ve/bin/activate"
 alias ved="deactivate"
 alias pipr="pip install -r requirements.txt"
 
-# descomprimir el archivo sin especificar el tipo de descomprimidor
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER == sudo\ * ]]; then
+        LBUFFER="${LBUFFER#sudo }"
+    elif [[ $BUFFER == $EDITOR\ * ]]; then
+        LBUFFER="${LBUFFER#$EDITOR }"
+        LBUFFER="sudoedit $LBUFFER"
+    elif [[ $BUFFER == sudoedit\ * ]]; then
+        LBUFFER="${LBUFFER#sudoedit }"
+        LBUFFER="$EDITOR $LBUFFER"
+    else
+        LBUFFER="sudo $LBUFFER"
+    fi
+}
+zle -N sudo-command-line
+# Defined shortcut keys: [Esc] [Esc]
+bindkey "\e\e" sudo-command-line
+bindkey -M vicmd '\e\e' sudo-command-line
+
+# Empaquetado en el archivo por el equipo pk 7z /dir1/dir2/pack nombre_del_archivo.7z
+function pk () {
+  if [ $1 ] ; then
+    case $1 in
+      tbz)       tar cjvf $2.tar.bz2 $2      ;;
+      tgz)       tar czvf $2.tar.gz  $2       ;;
+      txz)       tar -caf $2.tar.xz  $2       ;;
+      tar)       tar cpvf $2.tar  $2       ;;
+      bz2)       bzip $2 ;;
+      gz)        gzip -c -9 -n $2 > $2.gz ;;
+      zip)       zip -r $2.zip $2   ;;
+      7z)        7z a $2.7z $2    ;;
+      *)         echo "'$1' no se puede compilar con pk()" ;;
+    esac
+  else
+    echo "'$1' no es un archivo válido"
+  fi
+}
+
 alias x=extract
 
 extract() {
@@ -351,41 +388,3 @@ extract() {
     shift
   done
 }
-
-# Empaquetado en el archivo por el equipo pk 7z /dir1/dir2/pack nombre_del_archivo.7z
-function pk () {
-  if [ $1 ] ; then
-    case $1 in
-      tbz)       tar cjvf $2.tar.bz2 $2      ;;
-      tgz)       tar czvf $2.tar.gz  $2       ;;
-      txz)       tar -caf $2.tar.xz  $2       ;;
-      tar)       tar cpvf $2.tar  $2       ;;
-      bz2)       bzip $2 ;;
-      gz)        gzip -c -9 -n $2 > $2.gz ;;
-      zip)       zip -r $2.zip $2   ;;
-      7z)        7z a $2.7z $2    ;;
-      *)         echo "'$1' no se puede compilar con pk()" ;;
-    esac
-  else
-    echo "'$1' no es un archivo válido"
-  fi
-}
-
-sudo-command-line() {
-    [[ -z $BUFFER ]] && zle up-history
-    if [[ $BUFFER == sudo\ * ]]; then
-        LBUFFER="${LBUFFER#sudo }"
-    elif [[ $BUFFER == $EDITOR\ * ]]; then
-        LBUFFER="${LBUFFER#$EDITOR }"
-        LBUFFER="sudoedit $LBUFFER"
-    elif [[ $BUFFER == sudoedit\ * ]]; then
-        LBUFFER="${LBUFFER#sudoedit }"
-        LBUFFER="$EDITOR $LBUFFER"
-    else
-        LBUFFER="sudo $LBUFFER"
-    fi
-}
-zle -N sudo-command-line
-# Defined shortcut keys: [Esc] [Esc]
-bindkey "\e\e" sudo-command-line
-bindkey -M vicmd '\e\e' sudo-command-line
