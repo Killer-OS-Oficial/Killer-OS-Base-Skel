@@ -10,8 +10,6 @@ alias update-grub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias my-ip="curl --max-time 10 -w '\n' http://ident.me"
 alias speed="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -"
 alias update-dir="LC_ALL=C xdg-user-dirs-update --force"
-
-
 alias nmap_open_ports="nmap --open"
 alias nmap_list_interfaces="nmap --iflist"
 alias nmap_slow="sudo nmap -sS -v -T1"
@@ -27,90 +25,16 @@ alias nmap_traceroute="sudo nmap -sP -PE -PS22,25,80 -PA21,23,80,3389 -PU -PO --
 alias nmap_full_with_scripts="sudo nmap -sS -sU -T4 -A -v -PE -PP -PS21,22,23,25,80,113,31339 -PA80,113,443,10042 -PO --script all " 
 alias nmap_web_safe_osscan="sudo nmap -p 80,443 -O -v --osscan-guess --fuzzy "
 alias nmap_ping_scan="nmap -n -sP"
-
-# blur img: blur 4 .wall/wl3.jpg blur.jpg
-blur() {
-  convert -filter Gaussian -blur 0x$1 $2 $3
-}
-
-tbg() {
-  urxvt -bg '[0]red' -b 0 -depth 32 +sb -name urxvt_bg &
-}
-
-# fzf
-zzh() {
-  du -a ~/ | awk '{print $2}' | fzf | xargs -r $EDITOR
-}
-zz() {
-  du -a . | awk '{print $2}' | fzf | xargs -r $EDITOR
-}
-zzd() {
-  du -a $1 | awk '{print $2}' | fzf | xargs -r $EDITOR
-}
-zzr() {
-  find -H "/usr/bin" "$HOME/.bin" -executable -print | sed -e 's=.*/==g' | fzf | sh
-}
-
-# dependencia de source-highlight
-hcat () {
-  /usr/bin/src-hilite-lesspipe.sh "$1" | less -m -N
-}
-
-# compartir vbox en la máquina local mkdir vboxshare
-# en la maquina virtual uid={Nombre de usuario} git={Grupo}
-vboxshare () {
-  mkdir vboxshare
-  sudo mount -t vboxsf -o rw,uid=1000,gid=1000 vboxshare vboxshare
-  # sudo mount -t vboxsf -o rw,uid=killer-os,gid=users vboxshare vboxshare
-}
-# compartir qemu
-vmshare () {
-  mkdir vmshare
-  sudo mount -t 9p -o trans=virtio,version=9p2000.L /vmshare vmshare
-}
-
-# aur pkg
-amake () {
-  git clone https://aur.archlinux.org/"$1".git
-  # curl -fO https://aur.archlinux.org/cgit/aur.git/snapshot/"$1".tar.gz
-  cd $1
-  makepkg -s
-  # makepkg -s --sign
-  cd ..
-}
-
-aget () {
-  git clone https://aur.archlinux.org/"$1".git
-  # curl -fO https://aur.archlinux.org/cgit/aur.git/snapshot/"$1".tar.gz
-  cd $1
-}
-
-# construir e instalar pkg de aur
-abuild () {
-  cd ~/.build
-  git clone https://aur.archlinux.org/"$1".git
-  # curl -fO https://aur.archlinux.org/cgit/aur.git/snapshot/"$1".tar.gz
-  # tar -xvf $1.tar.gz
-  cd $1
-  makepkg -si --skipinteg
-  cd ~
-  # rm -rf ~/.build/$1 ~/.build/$1.tar.gz
-  rm -rf ~/.build/$1
-}
-
-alias neofetch="neofetch --w3m ~/.config/neofetch/killer-os.png"
-
+#alias neofetch="neofetch --w3m ~/.config/neofetch/killer-os.png"
 alias srm="sudo rm -rf"
 alias rm="rm -rf"
 alias c="clear"
-
 alias dir="dir --color=auto"
 alias vdir="vdir --color=auto"
 alias grep="grep --color=always"
 #alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
-
 alias ls="ls --color=auto"
 alias ll="ls -alFh --color=auto"
 alias llp="stat -c '%A %a %n' {*,.*}"
@@ -119,92 +43,29 @@ alias l="ls -CF --color=auto"
 alias .l="dirs -v"
 alias lss="ls -sh | sort -h"
 alias duh="du -d 1 -h | sort -h"
-
-alias mk="mkdir"
-mkj () {
-  mkdir -p "$1"
-  cd "$1"
-}
-
 alias /="cd /"
 alias ~="cd ~"
 alias ..="cd .."
 alias q="exit"
-
-gc () {
-  git clone "$1"
-}
-function gcj () {
-  git clone "$1"
-  cd "$2"
-  # $EDITOR .
-}
 alias gi="git init"
 alias gs="git status"
 alias gl="git log --stat --pretty=oneline --graph --date=short"
 alias gg="gitg &"
 alias ga="git add --all"
-gac () {
-  git add --all
-  git commit -am "$1"
-}
 alias gr="git remote"
 alias gf="git fetch"
 alias gpl="git pull"
 alias gp="git push"
 alias gpm="git push origin master"
-
-# tor chromium
 alias torc="$BROWSER --proxy-server='socks://127.0.0.1:9050' &"
-
-# full screen flags -fs
-yt () {
-  straw-viewer "$1"
-}
-
-# youtube-dl --ignore-errors -o '~/Vídeo/youtube/%(playlist)s/%(title)s.%(ext)s' https://www.youtube.com/playlist?list=PL-UzghgfytJQV-JCEtyuttutudMk7
-# Carga de videos ~/Videos o ~/Vídeo
-# Ejemplo: dlv https://www.youtube.com/watch?v=gBAfejjUQoA
-dlv () {
-  youtube-dl --ignore-errors -o '~/Vídeos/youtube/%(title)s.%(ext)s' "$1"
-}
-# dlp https://www.youtube.com/playlist?list=PL-UzghgfytJQV-JCEtyuttutudMk7
-dlp () {
-  youtube-dl --ignore-errors -o '~/Vídeos/youtube/%(playlist)s/%(title)s.%(ext)s' "$1"
-}
-
-# Descargar audio ~/Music o ~/Musica
-# Ejemplo: mp3 https://www.youtube.com/watch?v=gBAfejjUQoA
-mp3 () {
-  youtube-dl --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Música/youtube/%(title)s.%(ext)s' "$1"
-}
-# mp3p https://www.youtube.com/watch?v=-F7A24f6gNc&list=RD-F7A24f6gNc
-mp3p () {
-  youtube-dl --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Música/youtube/%(playlist)s/%(title)s.%(ext)s' "$1"
-}
-
 alias porn="mpv 'http://www.pornhub.com/random'"
-
 alias mvis="ncmpcpp -S visualizer"
 alias m="ncmpcpp"
-
-pf () {
-  peerflix "$1" --mpv
-}
-alias rss="newsboat"
-# descargar sitio web
-wgetw () {
-  wget -rkx "$1"
-}
-iso () {
-  sudo dd bs=4M if="$1" of=/dev/"$2" status=progress && sync
-}
-
+alias mk="mkdir"
 alias -s {mp3,m4a,flac}="mpv"
 alias -s {png,jpg,tiff,bmp}="viewnior"
 # alias -s {conf,txt}="nvim"
 # alias {aurman,pikaur,trizen,yaourt}="yay"
-
 alias mi="micro"
 alias smi="sudo micro"
 alias st="subl3"
@@ -220,12 +81,9 @@ alias na="nautilus . &"
 alias sna="sudo nautilus &"
 alias h="htop"
 # alias {v,vi,vim}="nvim"
-
-# LANG=C pacman -Sl | awk '/\[installed\]$/ {print $2}' > ~/.pkglist.txt
-# LANG=C pacman -Sl | awk '/\[installed\]$/ {print $1 "/" $2 "-" $3}' > ~/.pkglist.txt
+alias rss="newsboat"
 alias pkglist="pacman -Qneq > ~/.pkglist.txt"
 alias aurlist="pacman -Qmeq > ~/.aurlist.txt"
-
 alias packey="sudo pacman-key --init && sudo pacman-key --populate archlinux && sudo pacman-key --refresh-keys && sudo pacman -Syy"
 alias sp="sudo pacman -S"
 alias spo="sudo pacman -S --overwrite='*'"
@@ -237,7 +95,6 @@ alias spcc="sudo pacman -Scc"
 alias spy="sudo pacman -Syy"
 alias spu="sudo pacman -Syu"
 alias spr="sudo pacman -R"
-
 alias y="yay -S"
 alias yn="yay -S --noconfirm"
 alias yl="yay -S --noconfirm - < .aurlist.txt"
@@ -253,8 +110,6 @@ alias yrsn="yay -Rsn $(pacman -Qdtq)"
 alias yrn="yay -R --noconfirm"
 alias yskip="yay --mflags '--nocheck --skippgpcheck --noconfirm'"
 alias ynskip="yay --mflags --skipinteg --noconfirm"
-
-# systemd
 alias sse="sudo systemctl enable"
 alias ssd="sudo systemctl disable"
 alias ssen="sudo systemctl enable --now"
@@ -262,12 +117,128 @@ alias ssdn="sudo systemctl disable --now"
 alias ssr="sudo systemctl restart"
 alias ssk="sudo systemctl stop"
 alias sss="sudo systemctl status"
-
-# Python
 alias ve="virtualenv ve"
 alias vea="source ve/bin/activate"
 alias ved="deactivate"
 alias pipr="pip install -r requirements.txt"
+
+mkj () {
+  mkdir -p "$1"
+  cd "$1"
+}
+
+gc () {
+  git clone "$1"
+}
+
+function gcj () {
+  git clone "$1"
+  cd "$2"
+  # $EDITOR .
+}
+
+gac () {
+  git add --all
+  git commit -am "$1"
+}
+
+blur() {
+  convert -filter Gaussian -blur 0x$1 $2 $3
+}
+
+tbg() {
+  urxvt -bg '[0]red' -b 0 -depth 32 +sb -name urxvt_bg &
+}
+
+zzh() {
+  du -a ~/ | awk '{print $2}' | fzf | xargs -r $EDITOR
+}
+
+zz() {
+  du -a . | awk '{print $2}' | fzf | xargs -r $EDITOR
+}
+
+zzd() {
+  du -a $1 | awk '{print $2}' | fzf | xargs -r $EDITOR
+}
+
+zzr() {
+  find -H "/usr/bin" "$HOME/.bin" -executable -print | sed -e 's=.*/==g' | fzf | sh
+}
+
+hcat () {
+  /usr/bin/src-hilite-lesspipe.sh "$1" | less -m -N
+}
+
+vboxshare () {
+  mkdir vboxshare
+  sudo mount -t vboxsf -o rw,uid=1000,gid=1000 vboxshare vboxshare
+  # sudo mount -t vboxsf -o rw,uid=killer-os,gid=users vboxshare vboxshare
+}
+
+vmshare () {
+  mkdir vmshare
+  sudo mount -t 9p -o trans=virtio,version=9p2000.L /vmshare vmshare
+}
+
+amake () {
+  git clone https://aur.archlinux.org/"$1".git
+  # curl -fO https://aur.archlinux.org/cgit/aur.git/snapshot/"$1".tar.gz
+  cd $1
+  makepkg -s
+  # makepkg -s --sign
+  cd ..
+}
+
+aget () {
+  git clone https://aur.archlinux.org/"$1".git
+  # curl -fO https://aur.archlinux.org/cgit/aur.git/snapshot/"$1".tar.gz
+  cd $1
+}
+
+abuild () {
+  cd ~/.build
+  git clone https://aur.archlinux.org/"$1".git
+  # curl -fO https://aur.archlinux.org/cgit/aur.git/snapshot/"$1".tar.gz
+  # tar -xvf $1.tar.gz
+  cd $1
+  makepkg -si --skipinteg
+  cd ~
+  # rm -rf ~/.build/$1 ~/.build/$1.tar.gz
+  rm -rf ~/.build/$1
+}
+
+yt () {
+  straw-viewer "$1"
+}
+
+dlv () {
+  youtube-dl --ignore-errors -o '~/Vídeos/youtube/%(title)s.%(ext)s' "$1"
+}
+
+dlp () {
+  youtube-dl --ignore-errors -o '~/Vídeos/youtube/%(playlist)s/%(title)s.%(ext)s' "$1"
+}
+
+mp3 () {
+  youtube-dl --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Música/youtube/%(title)s.%(ext)s' "$1"
+}
+
+mp3p () {
+  youtube-dl --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Música/youtube/%(playlist)s/%(title)s.%(ext)s' "$1"
+}
+
+pf () {
+  peerflix "$1" --mpv
+}
+
+wgetw () {
+  wget -rkx "$1"
+}
+
+iso () {
+  sudo dd bs=4M if="$1" of=/dev/"$2" status=progress && sync
+}
 
 sudo-command-line() {
     [[ -z $BUFFER ]] && zle up-history
@@ -283,7 +254,7 @@ sudo-command-line() {
         LBUFFER="sudo $LBUFFER"
     fi
 }
+
 zle -N sudo-command-line
-# Defined shortcut keys: [Esc] [Esc]
 bindkey "\e\e" sudo-command-line
 bindkey -M vicmd '\e\e' sudo-command-line
